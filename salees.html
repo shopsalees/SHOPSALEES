@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ShopSalees - All-in-One Deals in UAE</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      margin: 0;
+      padding: 0;
+      direction: ltr;
+    }
+    header {
+      background-color: #1a1a1a;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      position: relative;
+    }
+    .lang-toggle {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    .tagline {
+      color: #ccc;
+      margin-top: 0.3rem;
+    }
+    .search-box {
+      text-align: center;
+      margin: 2rem auto;
+    }
+    .search-box input[type="text"] {
+      width: 60%;
+      padding: 0.7rem;
+      font-size: 1rem;
+    }
+    .search-box button {
+      padding: 0.7rem 1rem;
+      background-color: #1a1a1a;
+      color: white;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .categories {
+      max-width: 800px;
+      margin: 2rem auto;
+      text-align: center;
+    }
+    .categories h2 {
+      margin-bottom: 1rem;
+    }
+    .categories a {
+      display: inline-block;
+      margin: 0.5rem 1rem;
+      padding: 0.5rem 1rem;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      text-decoration: none;
+      color: #1a1a1a;
+      font-weight: bold;
+      transition: all 0.2s ease;
+    }
+    .categories a:hover {
+      background: #1a1a1a;
+      color: white;
+    }
+    /* New product cards container */
+    .products-container {
+      max-width: 900px;
+      margin: 2rem auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .product-card {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      width: 220px;
+      padding: 1rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .product-card img {
+      max-width: 100%;
+      height: 160px;
+      object-fit: contain;
+      margin-bottom: 0.8rem;
+    }
+    .product-name {
+      font-weight: bold;
+      margin: 0.5rem 0;
+      font-size: 1rem;
+      min-height: 2.4em; /* keep height consistent */
+    }
+    .product-price {
+      color: #e91e63;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+    .product-review {
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 0.5rem;
+    }
+    .product-rating {
+      color: #ffb400;
+      margin-bottom: 0.8rem;
+    }
+    .product-link {
+      text-decoration: none;
+      background-color: #1a1a1a;
+      color: white;
+      padding: 0.5rem;
+      border-radius: 4px;
+      font-weight: bold;
+      transition: background-color 0.2s ease;
+    }
+    .product-link:hover {
+      background-color: #e91e63;
+    }
+    footer {
+      background-color: #1a1a1a;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1 id="title">ShopSalees</h1>
+  <p id="tagline" class="tagline">All-in-One Deals | كل العروض في مكان واحد</p>
+  <div class="lang-toggle">
+    <button onclick="toggleLanguage()">عربي / English</button>
+  </div>
+</header>
+
+<div class="search-box">
+  <form id="searchForm">
+    <input type="text" id="searchQuery" placeholder="Search Amazon or Noon UAE...">
+    <button type="submit" id="searchBtn">Search</button>
+  </form>
+</div>
+
+<div class="categories">
+  <h2 id="popularCategories">Popular Categories</h2>
+  <div id="categoryLinks">
+    <!-- Links will be injected here -->
+  </div>
+</div>
+
+<!-- Products section -->
+<div class="products-container" id="productsContainer">
+  <!-- Product cards will be injected here -->
+</div>
+
+<footer>
+  &copy; 2025 ShopSalees. All rights reserved.
+</footer>
+
+<script>
+  const categories = [
+    { name: "Electronics", query: "electronics" },
+    { name: "Fashion", query: "fashion" },
+    { name: "Home & Kitchen", query: "home" },
+    { name: "Beauty", query: "beauty" },
+    { name: "Toys", query: "toys" },
+    { name: "Sports", query: "sports" },
+    { name: "Grocery", query: "grocery" },
+    { name: "Mobiles", query: "mobiles" },
+    { name: "Laptops", query: "laptops" },
+    { name: "Gaming", query: "gaming" }
+  ];
+
+  const translations = {
+    en: {
+      tagline: "All-in-One Deals | كل العروض في مكان واحد",
+      searchPlaceholder: "Search Amazon or Noon UAE...",
+      searchBtn: "Search",
+      categoriesTitle: "Popular Categories",
+      amazon: "Amazon",
+      noon: "Noon",
+      priceLabel: "Price",
+      reviewsLabel: "Reviews",
+      ratingLabel: "Rating"
+    },
+    ar: {
+      tagline: "كل العروض في مكان واحد | All-in-One Deals",
+      searchPlaceholder: "ابحث في أمازون ونون الإمارات...",
+      searchBtn: "بحث",
+      categoriesTitle: "الفئات الشائعة",
+      amazon: "أمازون",
+      noon: "نون",
+      priceLabel: "السعر",
+      reviewsLabel: "التقييمات",
+      ratingLabel: "التقييم"
+    }
+  };
+
+  let currentLang = "en";
+
+  function buildCategoryLinks() {
+    const container = document.getElementById("categoryLinks");
+    container.innerHTML = "";
+    categories.forEach(cat => {
+      const amazon = document.createElement("a");
+      amazon.href = `https://www.amazon.ae/s?k=${encodeURIComponent(cat.query)}&tag=your-amazon-id`;
+      amazon.innerText = `${translations[currentLang].amazon} ${cat.name}`;
+      amazon.target = "_blank";
+      container.appendChild(amazon);
+
+      const noon = document.createElement("a");
+      noon.href = `https://www.noon.com/uae-en/search?q=${encodeURIComponent(cat.query)}&utm_source=affiliate`;
+      noon.innerText = `${translations[currentLang].noon} ${cat.name}`;
+      noon.target = "_blank";
+      container.appendChild(noon);
+    });
+  }
+
+  // Mock product data (replace with API data for real use)
+  const products = [
+    {
+      name: "Samsung Galaxy S21 Ultra",
+      image: "https://images-na.ssl-images-amazon.com/images/I/91BGw2oO8tL._AC_SL1500_.jpg",
+      price: "AED 3,899",
+      reviews: 1523,
+      rating: 4.6,
+      amazonLink: "https://www.amazon.ae/dp/B08N2MSSZY/?tag=your-amazon-id",
+      noonLink: "https://www.noon.com/uae-en/samsung-galaxy-s21-ultra/p/abc123?utm_source=affiliate"
+    },
+    {
+      name: "Apple AirPods Pro",
+      image: "https://images-na.ssl-images-amazon.com/images/I/71zny7BTRlL._AC_SL1500_.jpg",
+      price: "AED 899",
+      reviews: 2540,
+      rating: 4.7,
+      amazonLink: "https://www.amazon.ae/dp/B07ZPC9QD4/?tag=your-amazon-id",
+      noonLink: "https://www.noon.com/uae-en/apple-airpods-pro/p/def456?utm_source=affiliate"
+    },
+    {
+      name: "Instant Pot Duo 7-in-1",
+      image: "https://images-na.ssl-images-amazon.com/images/I/71VbWpQQK0L._AC_SL1500_.jpg",
+      price: "AED 399",
+      reviews: 840,
+      rating: 4.5,
+      amazonLink: "https://www.amazon.ae/dp/B01B1VC13K/?tag=your-amazon-id",
+      noonLink: "https://www.noon.com/uae-en/instant-pot-duo/p/ghi789?utm_source=affiliate"
+    }
+  ];
+
+  function renderProducts() {
+    const container = document.getElementById("productsContainer");
+    container.innerHTML = "";
+    products.forEach(product => {
+      const card = document.createElement("div");
+      card.className = "product-card";
+
+      card.innerHTML = `
+        <img src="${product.image}" alt="${product.name}" />
+        <div class="product-name">${product.name}</div>
+        <div class="product-price">${translations[currentLang].priceLabel}: ${product.price}</div>
+        <div class="product-review">${translations[currentLang].reviewsLabel}: ${product.reviews}</div>
+        <div class="product-rating">${translations[currentLang].ratingLabel}: ${"⭐".repeat(Math.round(product.rating))} (${product.rating.toFixed(1)})</div>
+        <a href="${product.amazonLink}" target="_blank" class="product-link">${translations[currentLang].amazon}</a>
+        <a href="${product.noonLink}" target="_blank" class="product-link" style="margin-top:0.4rem; background-color: #ff6f00;">${translations[currentLang].noon}</a>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function toggleLanguage() {
+    currentLang = currentLang === "en" ? "ar" : "en";
+    document.getElementById("tagline").innerText = translations[currentLang].tagline;
+    document.getElementById("searchQuery").placeholder = translations[currentLang].searchPlaceholder;
+    document.getElementById("searchBtn").innerText = translations[currentLang].searchBtn;
+    document.getElementById("popularCategories").innerText = translations[currentLang].categoriesTitle;
+    document.body.style.direction = currentLang === "ar" ? "rtl" : "ltr";
+    buildCategoryLinks();
+    renderProducts();
+  }
+
+  document.getElementById("searchForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const query = document.getElementById("searchQuery").value.trim();
+    if (!query) return;
+    // For demo: open search on both Amazon and Noon
+    const amazonLink = `https://www.amazon.ae/s?k=${encodeURIComponent(query)}&tag=your-amazon-id`;
+    const noonLink = `https://www.noon.com/uae-en/search?q=${encodeURIComponent(query)}&utm_source=affiliate`;
+    window.open(amazonLink, '_blank');
+    window.open(noonLink, '_blank');
+  });
+
+  // Initialize
+  buildCategoryLinks();
+  renderProducts();
+
+</script>
+
+</body>
+</html>
